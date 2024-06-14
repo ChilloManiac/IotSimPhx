@@ -14,6 +14,10 @@ defmodule Iotsim.Application do
       {Phoenix.PubSub, name: Iotsim.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Iotsim.Finch},
+      Iotsim.Ticker,
+      {DynamicSupervisor, name: Iotsim.DynamicSupervisor, strategy: :one_for_one},
+      {Registry, keys: :unique, name: Iotsim.Registry},
+      Iotsim.Device.DeviceAgent,
       # Start a worker by calling: Iotsim.Worker.start_link(arg)
       # {Iotsim.Worker, arg},
       # Start to serve requests, typically the last entry
