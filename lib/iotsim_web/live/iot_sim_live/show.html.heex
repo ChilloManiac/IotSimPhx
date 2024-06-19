@@ -1,0 +1,34 @@
+<div class="grid grid-cols-2 gap-4">
+  <div class="flex flex-col gap-4">
+    <div class="shadow-lg p-4 h-fit">
+      <.header>
+        Device <%= @device.id %>
+      </.header>
+      <.list>
+        <:item title="id"><%= @device.id %></:item>
+        <:item title="name" class="capitalize"><%= @device.device_state %></:item>
+        <:item title="failures"><%= @device.failures %></:item>
+      </.list>
+    </div>
+    <div class="shadow-lg p-4 h-fit">
+      <.header>Actions</.header>
+      <.button phx-click="set_state" phx-value-action="starting">Set Starting</.button>
+      <.button phx-click="set_state" phx-value-action="running">Set Running</.button>
+      <.button phx-click="set_state" phx-value-action="error">Set Error</.button>
+      <.button phx-click="set_state" phx-value-action="broken">Set Broken</.button>
+      <.button phx-click="reset_failures">Reset failures</.button>
+    </div>
+  </div>
+  <ul class="shadow-lg p-4 min-h-screen">
+    <%= for %{message: message, timestamp: timestamp} <- @device.events do %>
+      <li class="flex justify-between m-2 border-b-2">
+        <span>
+          <%= timestamp %>
+        </span>
+        <span><%= message %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<.back navigate={~p"/"}>Back to dashboard</.back>

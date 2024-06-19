@@ -1,0 +1,37 @@
+<.header>
+  Dashboard
+  <.form for={@form} phx-submit="create">
+    <.input type="number" field={@form[:amount]} />
+    <.button>Submit</.button>
+  </.form>
+</.header>
+
+<div class="flex flex-row flex-wrap border-black ">
+  <%= for {id, status} <- @devices do %>
+    <.link
+      href={~p"/#{id}"}
+      class="flex-1 min-w-48 max-w-48 min-h-12 border-gray-400 rounded border-2 p-2 m-2 flex gap-4"
+    >
+      <div class="flex-0 flex items-center justify-center">
+        <.icon name="hero-cpu-chip" />
+      </div>
+      <div class="flex-1 truncate">
+        <p class="truncate">Device: <%= id %></p>
+        <div class="flex justify-between flex-row items-center">
+          <span>Status:</span>
+          <span class={"rounded p-0.5 capitalize " <> 
+            case status do
+              :starting -> "bg-yellow-500 text-black"
+              :running -> "bg-green-500 text-white"
+              :error -> "bg-red-400 text-white"
+              :broken -> "bg-red-800 text-white"
+              _ -> raise "Unknown status"
+            end
+            }>
+            <%= status %>
+          </span>
+        </div>
+      </div>
+    </.link>
+  <% end %>
+</div>
