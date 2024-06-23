@@ -1,18 +1,21 @@
 # Iotsim
 
-To start your Phoenix server:
+Simple IOT-device simulator written in phoenix and elixir.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+To run use `docker compose up` and access the dashboard on
+`http://localhost:4000`. Enter amount of DeviceSims to create and hit enter
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Each device will change state every 5 seconds.
+```
+- From starting -> Running
+- From Running ->
+    20% chance -> Error
+    80% chance -> Running
+- From Error -> 
+    Errors < 3 -> Starting
+    Errors <= 3 -> Broken
+- Stays in Broken
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+A user may manually change states on each device, and clear the amount of recorded errors.
+Each transition is recorded in an event-log
